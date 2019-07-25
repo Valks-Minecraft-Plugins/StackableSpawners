@@ -6,19 +6,13 @@ import java.io.IOException;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.java.JavaPlugin;
-
-import com.stackablespawners.StackableSpawners;
 
 public class ConfigManager {
-	StackableSpawners plugin;
-	
 	File configFile;
 	FileConfiguration config;
 	
-	public ConfigManager(String name) {
-		plugin = JavaPlugin.getPlugin(StackableSpawners.class);
-		configFile = new File(plugin.getDataFolder(), name + ".yml");
+	public ConfigManager(File dataFolder, String name) {
+		configFile = new File(dataFolder, name + ".yml");
 		config = YamlConfiguration.loadConfiguration(configFile);
 	}
 	
