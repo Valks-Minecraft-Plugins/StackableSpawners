@@ -2,6 +2,8 @@
 
 Stack spawners together to upgrade how many mobs are spawned next time. You can right click on a spawner with your empty hand to check its level and type.
 
+For example lets say we have a pig spawner and 2 spawn events were fired, if it's a level 1 spawner than 2 pigs would spawn. If it were a level 2 spawner than 4 pigs would spawn. If only 1 spawn events were fired and it was a level 3 spawner then 3 pigs would spawn.
+
 Download [here](https://github.com/valkyrienyanko/StackableSpawners/releases).
 
 ### Main Config Preview
