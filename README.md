@@ -35,18 +35,4 @@ spawners:
       z: -3
     type: WITHER_SKELETON
     level: 3
-  '3':
-    loc:
-      x: -1
-      y: 4
-      z: -10
-    type: SKELETON
-    level: 1
-  '4':
-    loc:
-      x: 8
-      y: 4
-      z: -5
-    type: SHEEP
-    level: 2
 ```
