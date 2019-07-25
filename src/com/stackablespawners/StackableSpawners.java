@@ -6,6 +6,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.stackablespawners.configs.ConfigManager;
 import com.stackablespawners.events.SpawnerClicked;
 import com.stackablespawners.events.SpawnerPlaced;
+import com.stackablespawners.inventory.InventoryClicks;
 
 public class StackableSpawners extends JavaPlugin {
 	// 1.12.2
@@ -20,5 +21,6 @@ public class StackableSpawners extends JavaPlugin {
 	private void registerEvents(PluginManager pm) {
 		pm.registerEvents(new SpawnerPlaced(), this);
 		pm.registerEvents(new SpawnerClicked(), this);
+		pm.registerEvents(new InventoryClicks(), this);
 	}
 }
