@@ -25,8 +25,8 @@ public class SpawnerPlaced implements Listener {
 	
 	@EventHandler
 	private void blockPlaced(BlockPlaceEvent e) {
-		boolean debug = true;
-		if (e.getPlayer().getGameMode() != GameMode.SURVIVAL && debug != true) return;
+		if (!e.getPlayer().hasPermission("stackablespawners.use") && !plugin.mainConfig.getConfig().getBoolean("ignorePermissions")) return;
+		if (e.getPlayer().getGameMode() == GameMode.CREATIVE && plugin.mainConfig.getConfig().getBoolean("ignoreCreativeMode")) return;
 		if (e.getBlock().getType() != Material.MOB_SPAWNER) return;
 		
 		ConfigManager cm = plugin.spawnerConfig;
@@ -40,9 +40,12 @@ public class SpawnerPlaced implements Listener {
 		ConfigurationSection sectionSpawners = config.getConfigurationSection("spawners");
 		
 		int slot = 1;
-		for (String element : sectionSpawners.getKeys(false)) {
-			if (element != null) {
-				slot++;
+		
+		if (config.isConfigurationSection("spawners")) {
+			for (String element : sectionSpawners.getKeys(false)) {
+				if (element != null) {
+					slot++;
+				}
 			}
 		}
 		

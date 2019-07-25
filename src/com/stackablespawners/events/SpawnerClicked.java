@@ -41,29 +41,44 @@ public class SpawnerClicked implements Listener {
 		if (e.getHand() != EquipmentSlot.HAND) return;
 		if (e.getAction() != Action.RIGHT_CLICK_BLOCK) return;
 		
-		ConfigManager cm = plugin.spawnerConfig;
-		Configuration config = cm.getConfig();
-		ConfigurationSection configSection = config.getConfigurationSection("spawners");
+		ConfigManager cmSpawner = plugin.spawnerConfig;
+		Configuration spawnerConfig = cmSpawner.getConfig();
+		ConfigurationSection configSection = spawnerConfig.getConfigurationSection("spawners");
+		
+		ConfigManager cmMain = plugin.mainConfig;
+		Configuration mainConfig = cmMain.getConfig();
+		
+		if (!spawnerConfig.isConfigurationSection("spawners")) return;
 		
 		for (String element : configSection.getKeys(false)) {
 			String pathLoc = "spawners." + element + ".loc.";
 			
-			if (config.getInt(pathLoc + "x") == loc.getBlockX() && config.getInt(pathLoc + "y") == loc.getBlockY() && config.getInt(pathLoc + "z") == loc.getBlockZ()) {
+			if (spawnerConfig.getInt(pathLoc + "x") == loc.getBlockX() && spawnerConfig.getInt(pathLoc + "y") == loc.getBlockY() && spawnerConfig.getInt(pathLoc + "z") == loc.getBlockZ()) {
 				Player p = e.getPlayer();
 				ItemStack spawner = p.getEquipment().getItemInMainHand();
 				
 				String pathLevel = "spawners." + element + ".level";
-				int lvl = config.getInt(pathLevel);
+				int lvl = spawnerConfig.getInt(pathLevel);
 				
 				if (spawner.getType() == Material.MOB_SPAWNER) {
 					e.setCancelled(true);
 					spawner.setAmount(spawner.getAmount() - 1);
 					
 					int newLvl = lvl + 1;
+					int maxLvl = mainConfig.getInt("maxSpawnerLevel");
 					
-					config.set(pathLevel, newLvl);
+					if (maxLvl == -1) {
+						maxLvl = 3;
+					}
+					
+					if (newLvl > maxLvl) {
+						p.sendMessage(Utils.color("&7The spawner can't exceed the max level (&f" + lvl + "&7)!"));
+						return;
+					}
+					
+					spawnerConfig.set(pathLevel, newLvl);
 					p.sendMessage(Utils.color("&7Spawner upgraded to level &f" + newLvl + "&7."));
-					cm.saveConfig();
+					cmSpawner.saveConfig();
 				} else {
 					Inventory inv = Bukkit.createInventory(null, 9, "Spawner");
 					inv.setItem(0, Utils.item(Material.FEATHER, "&7Lvl", new String[] {"&f" + lvl}));
@@ -77,19 +92,5 @@ public class SpawnerClicked implements Listener {
 				}
 			}
 		}
-	}
-	
-	/*
-	 * Spawner was either upgraded or opened.
-	 */
-	private void spawnerInteracted() {
-		
-	}
-	
-	/*
-	 * Spawner was destroyed and removed from spawners config.
-	 */
-	private void spawnerDestroyed() {
-		
 	}
 }
