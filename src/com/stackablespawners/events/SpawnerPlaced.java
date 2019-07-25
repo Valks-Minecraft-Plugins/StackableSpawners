@@ -11,24 +11,16 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.plugin.java.JavaPlugin;
-
 import com.stackablespawners.StackableSpawners;
 
 public class SpawnerPlaced implements Listener {
-	StackableSpawners plugin = null;
-	
-	public SpawnerPlaced() {
-		plugin = JavaPlugin.getPlugin(StackableSpawners.class);
-	}
-	
 	@EventHandler
 	private void blockPlaced(BlockPlaceEvent e) {
 		boolean debug = true;
 		if (e.getPlayer().getGameMode() != GameMode.SURVIVAL && debug != true) return;
 		if (e.getBlock().getType() != Material.MOB_SPAWNER) return;
 		
-		Configuration config = plugin.getSpawnerConfig();
+		Configuration config = StackableSpawners.spawnerConfig.getConfig();
 		
 		Block b = e.getBlock();
 		CreatureSpawner type = (CreatureSpawner) b.getState();
@@ -49,6 +41,6 @@ public class SpawnerPlaced implements Listener {
 		config.set("spawners." + slot + ".loc.z", loc.getBlockZ());
 		config.set("spawners." + slot + ".type", mobType.name());
 		config.set("spawners." + slot + ".level", 1);
-		plugin.saveSpawnerConfig();
+		StackableSpawners.spawnerConfig.saveConfig();
 	}
 }
