@@ -40,14 +40,7 @@ public class SpawnerClicked implements Listener {
 		for (String element : configSection.getKeys(false)) {
 			String path = "spawners." + element + ".loc.";
 			
-			System.out.println("===");
-			System.out.println(element);
-			System.out.println(config.getInt(path + "x"));
-			System.out.println(config.getInt(path + "y"));
-			System.out.println(config.getInt(path + "z"));
-			System.out.println("===");
-			
-			if (config.getInt(path + "x") == loc.getBlockX() && config.getInt(path + "y") == loc.getBlockY() && config.getInt(path + "z") == loc.getBlockY()) {
+			if (config.getInt(path + "x") == loc.getBlockX() && config.getInt(path + "y") == loc.getBlockY() && config.getInt(path + "z") == loc.getBlockZ()) {
 				System.out.println("Works!");
 				e.getPlayer().sendMessage("Spawner exists!");
 			}
