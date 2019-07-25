@@ -1,4 +1,5 @@
 # StackableSpawners
-Plugin request by Ash_ #1045.
 
-WIP
+Upgrade spawners by stacking the same spawner type on it.
+
+The upgrades make more mobs spawn.
